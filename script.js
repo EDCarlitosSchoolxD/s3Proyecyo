@@ -3,11 +3,12 @@ import Motherboard from "./js/classes/Motherboard.js";
 import pedirDatos from "./js/pedirDatos.js";
 import { pintarGeneracion } from "./js/pintarGeneracion.js";
 import { crearOption } from "./js/crearOption.js";
+import { borrarDatos } from "./js/borrarDatos.js";
 
 /**
  * DOM NODOS;
  */
-const app = document.getElementById('app');
+const debug = document.getElementById('Mostrar');
 // Marca Button
 const intelButton = document.getElementById('intel-button');
 const amdButton = document.getElementById('amd-button');
@@ -20,6 +21,9 @@ const imgContainerProcesador = document.getElementById('img-pro');
 const imgContainerMother = document.getElementById('img-mother');
 const imgContainerMemory = document.getElementById('img-memory');
 const imgContainerRAM = document.getElementById('img-ram');
+
+
+
 /**
  * VARIABLES GLOBALES
  */
@@ -58,13 +62,21 @@ function pintarProcesador(object,select,container,precioV){
             container.appendChild(nombre);
             container.appendChild(precio);
             precioV = object.precio[i];
-            console.log(precioProcesador);
+            console.log(precioV);
+
             break;
         }
 
     }
+    return precioV;
 }
-
+function buttons(button, marcaa){
+    button.addEventListener('click',()=>{
+        marca = marcaa;
+        pintarGeneracion(marca,selectGeneracion);
+        borrarDatos(selectMotherboard,selectProcesadores,imgContainerMother,imgContainerProcesador);
+    })
+}
 
 /*TERMINA LAS FUNCIONES */
 
@@ -91,65 +103,73 @@ pedirDatos(procesadores3,'./servidor/procesadoresAMD/terceraAMD.php');
 pedirDatos(procesadores4,'./servidor/procesadoresAMD/cuartaAmd.php');
 pedirDatos(procesadores5,'./servidor/procesadoresAMD/quintaAmd.php')
 
+
 /**
  * DATOS MOTHERBOARD
  */
  const amdMother = new Motherboard;
  const intelMother9 = new Motherboard;
  const intelMother10 = new Motherboard;
- const intelMother11 = new Motherboard;
+ const intelMother12 = new Motherboard;
 
- pedirDatos(amdMother,'./servidor/motherboard/amdMotherboard.php');
-console.log(amdMother);
+pedirDatos(amdMother,'./servidor/motherboard/amdMotherboard.php');
+pedirDatos(intelMother9,'./servidor/motherboard/intel9.php');
+pedirDatos(intelMother10,'./servidor/motherboard/intel10.php');
+pedirDatos(intelMother12,'./servidor/motherboard/intel12.php')
 
 
-console.log(amdMother.nombres);
-
+console.log(intelMother12);
 
 
 /*EVENT LISTENER (APP)*/
 
 // Marca ('click') event
-intelButton.addEventListener('click',()=>{
-    marca = 'intel';
-    pintarGeneracion(marca,selectGeneracion);
-    mapOption(procesadores9,selectProcesadores)   
 
-})
 
-amdButton.addEventListener('click',()=>{
-    marca = 'amd';
-    pintarGeneracion(marca,selectGeneracion);
-    selectMotherboard.innerHTML = "";
-    if(marca === 'amd'){
-        mapOption(amdMother,selectMotherboard)
-    }
-
-})
+buttons(amdButton,'amd');
+buttons(intelButton,'intel');
 
 
 // Generacion event ('change')
 selectGeneracion.addEventListener('change',()=>{
+    
+    selectMotherboard.innerHTML = "";
 
     const value = parseInt(selectGeneracion.value);
     selectProcesadores.innerHTML = "";
     if(value === 9){
+        borrarDatos(selectMotherboard,selectProcesadores,imgContainerMother,imgContainerProcesador);
         mapOption(procesadores9,selectProcesadores);
-        
+        mapOption(intelMother9,selectMotherboard);
+
     }else if(value === 10){
+        borrarDatos(selectMotherboard,selectProcesadores,imgContainerMother,imgContainerProcesador);
         mapOption(procesadores10,selectProcesadores); 
+        mapOption(intelMother10,selectMotherboard);
+
     }else if (value === 12){
+        borrarDatos(selectMotherboard,selectProcesadores,imgContainerMother,imgContainerProcesador);
         mapOption(procesadores12,selectProcesadores);
+        mapOption(intelMother12,selectMotherboard);
+
+
     }else if(value === 3){
         mapOption(procesadores3,selectProcesadores);
+        mapOption(amdMother,selectMotherboard);
+
     }else if(value === 4){
         mapOption(procesadores4,selectProcesadores);
+        mapOption(amdMother,selectMotherboard);
+
     }else if(value === 5){
         mapOption(procesadores5,selectProcesadores);
+        mapOption(amdMother,selectMotherboard);
+
     }
     else{
         selectProcesadores.innerHTML = `<option value="No hay">No hay</option>`
     }
+
 })
     
 
@@ -166,7 +186,18 @@ selectProcesadores.addEventListener('change',()=>{
 })
 
 selectMotherboard.addEventListener('change',()=>{
-
+    imgContainerMother.innerHTML = "";
     precioMother = pintarProcesador(amdMother,selectMotherboard,imgContainerMother,precioMother)
+    precioMother = pintarProcesador(intelMother9,selectMotherboard,imgContainerMother,precioMother)
+    precioMother = pintarProcesador(intelMother10,selectMotherboard,imgContainerMother,precioMother)
+    precioMother = pintarProcesador(intelMother12,selectMotherboard,imgContainerMother,precioMother)
 
+
+})
+
+
+
+debug.addEventListener('click',()=>{
+    console.log(precioProcesador);
+    console.log(precioMother);
 })

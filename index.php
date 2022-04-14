@@ -8,8 +8,33 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
-
 <body>
+    <style>
+        select{
+            width: 100%;
+            max-width: 500px;
+        }
+        img{
+            width: 100%;
+        }
+        h1{
+            white-space: pre-wrap;
+        }
+        .container-datos{
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 100px;
+            justify-content: space-evenly;
+        }
+        .container-img{
+            width: 100%;
+            max-width: 320px;
+        }
+        p,h2{
+            text-align: center;
+        }
+    </style>
+
 
     <nav class="navbar navbar-expand navbar-light bg-light">
         <div class="nav navbar-nav">
@@ -50,17 +75,20 @@
             <select name="motherboard" id="mother"></select>
         </div>
 
+  
 
     </form>
 
-    <div class="container">
-        <div id="img-pro"></div>
-        <div id="img-mother"></div>
-        <div id="img-memory"></div>
-        <div id="img-ram"></div>
-    </div>
+        <div class="container container-datos">
+            <div class="container-img" id="img-pro"></div>
+            <div class="container-img" id="img-mother"></div>
+            <div class="container-img" id="img-memory"></div>
+            <div class="container-img" id="img-ram"></div>
+        </div>
+       
 
-
+    
+   
 
     <div id="app"></div>
 

@@ -9,7 +9,6 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 
 
-
 // Conecta a la base de datos  con usuario, contraseña y nombre de la BD
 $servidor = "localhost"; $usuario = "root"; $contrasenia = "root"; $nombreBaseDatos = "armatupc";
 $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
@@ -17,7 +16,7 @@ $conexionBD = new mysqli($servidor, $usuario, $contrasenia, $nombreBaseDatos);
 
 // Consulta datos y recepciona una clave para consultar dichos datos con dicha clave
 
-    $sqlEmpleaados = mysqli_query($conexionBD,"SELECT * FROM procesadores WHERE generacion=10");
+    $sqlEmpleaados = mysqli_query($conexionBD,"SELECT * FROM motherboard WHERE generacion=9");
     if(mysqli_num_rows($sqlEmpleaados) > 0){
         $empleaados = mysqli_fetch_all($sqlEmpleaados,MYSQLI_ASSOC);
         echo json_encode($empleaados);
