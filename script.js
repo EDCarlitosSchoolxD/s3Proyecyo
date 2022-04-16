@@ -4,6 +4,7 @@ import pedirDatos from "./js/pedirDatos.js";
 import { pintarGeneracion } from "./js/pintarGeneracion.js";
 import { crearOption } from "./js/crearOption.js";
 import { borrarDatos } from "./js/borrarDatos.js";
+import { Memory } from "./js/classes/Memory.js";
 
 /**
  * DOM NODOS;
@@ -16,12 +17,60 @@ const amdButton = document.getElementById('amd-button');
 const selectGeneracion = document.getElementById('generacion');
 const selectProcesadores = document.getElementById('procesadores');
 const selectMotherboard = document.getElementById('mother')
+const selectMemory = document.getElementById('memory');
+const selectRAM = document.getElementById('ram');
 //Container IMG
 const imgContainerProcesador = document.getElementById('img-pro');
 const imgContainerMother = document.getElementById('img-mother');
 const imgContainerMemory = document.getElementById('img-memory');
 const imgContainerRAM = document.getElementById('img-ram');
 
+/**
+ * DATOS INTEL
+ */
+ const procesadores9 = new Procesadores;
+ const procesadores10 = new Procesadores;
+ const procesadores12 = new Procesadores;
+ pedirDatos(procesadores9,'./servidor/procesadoresIntel/novenaIntel.php')
+ pedirDatos(procesadores10,'./servidor/procesadoresIntel/decimaIntel.php')
+ pedirDatos(procesadores12,'./servidor/procesadoresIntel/doceIntel.php')
+ /*TERMINA DATOS INTEL*/
+ 
+ /**
+  * DATOS AMD
+  */
+ const procesadores3 = new Procesadores;
+ const procesadores4 = new Procesadores;
+ const procesadores5 = new Procesadores;
+ pedirDatos(procesadores3,'./servidor/procesadoresAMD/terceraAMD.php');
+ pedirDatos(procesadores4,'./servidor/procesadoresAMD/cuartaAmd.php');
+ pedirDatos(procesadores5,'./servidor/procesadoresAMD/quintaAmd.php')
+ 
+ 
+ /**
+  * DATOS MOTHERBOARD
+  */
+  const amdMother = new Motherboard;
+  const intelMother9 = new Motherboard;
+  const intelMother10 = new Motherboard;
+  const intelMother12 = new Motherboard;
+ 
+ pedirDatos(amdMother,'./servidor/motherboard/amdMotherboard.php');
+ pedirDatos(intelMother9,'./servidor/motherboard/intel9.php');
+ pedirDatos(intelMother10,'./servidor/motherboard/intel10.php');
+ pedirDatos(intelMother12,'./servidor/motherboard/intel12.php')
+ 
+ 
+ console.log(intelMother12);
+// DATOS MEMORY
+const memory = new Memory;
+pedirDatos(memory,'./servidor/memory/memory.php');
+// RAM
+const RAM = new Memory;
+pedirDatos(RAM,'./servidor/memory/ram.php')
+
+console.log(memory);
+console.log(RAM);
 
 
 /**
@@ -30,7 +79,8 @@ const imgContainerRAM = document.getElementById('img-ram');
 let marca = 'intel';
 let precioProcesador;
 let precioMother;
-
+let precioMemory;
+let precioRam;
 /*TERMINA LOS GLOBALES */
 
 
@@ -61,7 +111,7 @@ function pintarProcesador(object,select,container,precioV){
             container.appendChild(img);
             container.appendChild(nombre);
             container.appendChild(precio);
-            precioV = object.precio[i];
+            precioV = parseFloat(object.precio[i]);
             console.log(precioV);
 
             break;
@@ -82,43 +132,7 @@ function buttons(button, marcaa){
 
 
 
-/**
- * DATOS INTEL
- */
-const procesadores9 = new Procesadores;
-const procesadores10 = new Procesadores;
-const procesadores12 = new Procesadores;
-pedirDatos(procesadores9,'./servidor/procesadoresIntel/novenaIntel.php')
-pedirDatos(procesadores10,'./servidor/procesadoresIntel/decimaIntel.php')
-pedirDatos(procesadores12,'./servidor/procesadoresIntel/doceIntel.php')
-/*TERMINA DATOS INTEL*/
 
-/**
- * DATOS AMD
- */
-const procesadores3 = new Procesadores;
-const procesadores4 = new Procesadores;
-const procesadores5 = new Procesadores;
-pedirDatos(procesadores3,'./servidor/procesadoresAMD/terceraAMD.php');
-pedirDatos(procesadores4,'./servidor/procesadoresAMD/cuartaAmd.php');
-pedirDatos(procesadores5,'./servidor/procesadoresAMD/quintaAmd.php')
-
-
-/**
- * DATOS MOTHERBOARD
- */
- const amdMother = new Motherboard;
- const intelMother9 = new Motherboard;
- const intelMother10 = new Motherboard;
- const intelMother12 = new Motherboard;
-
-pedirDatos(amdMother,'./servidor/motherboard/amdMotherboard.php');
-pedirDatos(intelMother9,'./servidor/motherboard/intel9.php');
-pedirDatos(intelMother10,'./servidor/motherboard/intel10.php');
-pedirDatos(intelMother12,'./servidor/motherboard/intel12.php')
-
-
-console.log(intelMother12);
 
 
 /*EVENT LISTENER (APP)*/
@@ -131,12 +145,15 @@ buttons(intelButton,'intel');
 
 
 // Generacion event ('change')
-selectGeneracion.addEventListener('change',()=>{
+selectGeneracion.addEventListener('click',()=>{
     
     selectMotherboard.innerHTML = "";
-
-    const value = parseInt(selectGeneracion.value);
+    selectMemory.innerHTML = "";
+    selectRAM.innerHTML = "";
     selectProcesadores.innerHTML = "";
+    const value = parseInt(selectGeneracion.value);
+
+
     if(value === 9){
         borrarDatos(selectMotherboard,selectProcesadores,imgContainerMother,imgContainerProcesador);
         mapOption(procesadores9,selectProcesadores);
@@ -152,7 +169,6 @@ selectGeneracion.addEventListener('change',()=>{
         mapOption(procesadores12,selectProcesadores);
         mapOption(intelMother12,selectMotherboard);
 
-
     }else if(value === 3){
         mapOption(procesadores3,selectProcesadores);
         mapOption(amdMother,selectMotherboard);
@@ -167,9 +183,11 @@ selectGeneracion.addEventListener('change',()=>{
 
     }
     else{
-        selectProcesadores.innerHTML = `<option value="No hay">No hay</option>`
+        selectProcesadores.innerHTML = `<option value="No hay">Seleccione una marca</option>`
+        selectMotherboard.innerHTML = `<option value="No hay">Seleccione una marca</option>`
     }
-
+    mapOption(memory,selectMemory);
+    mapOption(RAM,selectRAM)
 })
     
 
@@ -195,9 +213,24 @@ selectMotherboard.addEventListener('change',()=>{
 
 })
 
+selectMemory.addEventListener('change',()=>{
+    imgContainerMemory.innerHTML = "";
+
+    precioMemory = pintarProcesador(memory,selectMemory,imgContainerMemory,precioMemory);
+})
+
+selectRAM.addEventListener('change',()=>{
+    imgContainerRAM.innerHTML = "";
+    precioRam = pintarProcesador(RAM,selectRAM,imgContainerRAM,precioRam);
+})
 
 
 debug.addEventListener('click',()=>{
     console.log(precioProcesador);
     console.log(precioMother);
+    console.log(precioMemory);
+    console.log(precioRam);
+
+    const total = precioMemory+precioProcesador+precioRam+precioMother;
+    console.log('el total es:' + total);
 })
