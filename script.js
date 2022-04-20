@@ -25,6 +25,10 @@ const imgContainerMother = document.getElementById('img-mother');
 const imgContainerMemory = document.getElementById('img-memory');
 const imgContainerRAM = document.getElementById('img-ram');
 
+
+const genPDF = document.getElementById('pdf')
+
+
 /**
  * DATOS INTEL
  */
@@ -100,15 +104,20 @@ function pintarProcesador(object,select,container,precioV){
 
     for(let i = 0; i<=object.nombres.length; i++){
         const img = document.createElement('img');
-        const nombre = document.createElement('h2');
+        const nombre = document.createElement('p');
         const precio = document.createElement('p');
+        
         if(select.value === object.nombres[i]){
             img.src = object.imagen[i];
             nombre.textContent = object.nombres[i];
 
+            const br = document.createElement('br');
+
             precio.textContent = object.precio[i]+ '$';
             console.log(object.nombres[i]);
             container.appendChild(img);
+            container.appendChild(br);
+            container.appendChild(br);
             container.appendChild(nombre);
             container.appendChild(precio);
             precioV = parseFloat(object.precio[i]);
@@ -137,9 +146,8 @@ function buttons(button, marcaa){
 
 /*EVENT LISTENER (APP)*/
 
+
 // Marca ('click') event
-
-
 buttons(amdButton,'amd');
 buttons(intelButton,'intel');
 
@@ -234,3 +242,26 @@ debug.addEventListener('click',()=>{
     const total = precioMemory+precioProcesador+precioRam+precioMother;
     console.log('el total es:' + total);
 })
+
+
+
+
+genPDF.addEventListener('click',(e)=>{
+    e.preventDefault();
+
+    const htmlDOM = document.getElementById('a').outerHTML;
+    console.log(selectGeneracion);
+
+
+    fetch('http://localhost/proyectoFinalS3/pdf.php',{
+        method: 'POST',
+        body: JSON.stringify(htmlDOM),
+        headers: {
+            'Content-Type': 'application/json'// AQUI indicamos el formato
+          }
+    })
+    .then(a => a.text())
+    .then(a => console.log(a))
+    
+})
+
