@@ -99,7 +99,7 @@ function mapOption(array,nodo){
     })
 }
 
-function pintarProcesador(object,select,container,precioV){
+function pintarProducto(object,select,container,precioV){
     
 
     for(let i = 0; i<=object.nombres.length; i++){
@@ -203,20 +203,20 @@ selectGeneracion.addEventListener('click',()=>{
 selectProcesadores.addEventListener('change',()=>{
     imgContainerProcesador.innerHTML = "";
 
-    precioProcesador = pintarProcesador(procesadores9,selectProcesadores,imgContainerProcesador,precioProcesador);
-    precioProcesador = pintarProcesador(procesadores10,selectProcesadores,imgContainerProcesador,precioProcesador);
-    precioProcesador = pintarProcesador(procesadores12,selectProcesadores,imgContainerProcesador,precioProcesador)
-    precioProcesador = pintarProcesador(procesadores3,selectProcesadores,imgContainerProcesador,precioProcesador)
-    precioProcesador = pintarProcesador(procesadores4,selectProcesadores,imgContainerProcesador,precioProcesador)
-    precioProcesador = pintarProcesador(procesadores5,selectProcesadores,imgContainerProcesador,precioProcesador)
+    precioProcesador = pintarProducto(procesadores9,selectProcesadores,imgContainerProcesador,precioProcesador);
+    precioProcesador = pintarProducto(procesadores10,selectProcesadores,imgContainerProcesador,precioProcesador);
+    precioProcesador = pintarProducto(procesadores12,selectProcesadores,imgContainerProcesador,precioProcesador)
+    precioProcesador = pintarProducto(procesadores3,selectProcesadores,imgContainerProcesador,precioProcesador)
+    precioProcesador = pintarProducto(procesadores4,selectProcesadores,imgContainerProcesador,precioProcesador)
+    precioProcesador = pintarProducto(procesadores5,selectProcesadores,imgContainerProcesador,precioProcesador)
 })
 
 selectMotherboard.addEventListener('change',()=>{
     imgContainerMother.innerHTML = "";
-    precioMother = pintarProcesador(amdMother,selectMotherboard,imgContainerMother,precioMother)
-    precioMother = pintarProcesador(intelMother9,selectMotherboard,imgContainerMother,precioMother)
-    precioMother = pintarProcesador(intelMother10,selectMotherboard,imgContainerMother,precioMother)
-    precioMother = pintarProcesador(intelMother12,selectMotherboard,imgContainerMother,precioMother)
+    precioMother = pintarProducto(amdMother,selectMotherboard,imgContainerMother,precioMother)
+    precioMother = pintarProducto(intelMother9,selectMotherboard,imgContainerMother,precioMother)
+    precioMother = pintarProducto(intelMother10,selectMotherboard,imgContainerMother,precioMother)
+    precioMother = pintarProducto(intelMother12,selectMotherboard,imgContainerMother,precioMother)
 
 
 })
@@ -224,12 +224,12 @@ selectMotherboard.addEventListener('change',()=>{
 selectMemory.addEventListener('change',()=>{
     imgContainerMemory.innerHTML = "";
 
-    precioMemory = pintarProcesador(memory,selectMemory,imgContainerMemory,precioMemory);
+    precioMemory = pintarProducto(memory,selectMemory,imgContainerMemory,precioMemory);
 })
 
 selectRAM.addEventListener('change',()=>{
     imgContainerRAM.innerHTML = "";
-    precioRam = pintarProcesador(RAM,selectRAM,imgContainerRAM,precioRam);
+    precioRam = pintarProducto(RAM,selectRAM,imgContainerRAM,precioRam);
 })
 
 
